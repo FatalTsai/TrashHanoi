@@ -1,0 +1,75 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+ # define SWAP(x,y,t) (t=x,x=y,y=t)
+#include "Unit1.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+int  k,n,count=0;
+
+char list [9] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+
+
+   // 在對應呼叫 perm() 的 button 中：
+
+	//k = StrToInt(Edit1->Text);
+
+	//n = StrToInt(Edit2->Text);
+
+	//perm( list, k, n );      // 傳入 list 陣列、起始註標 k與字串長度 n
+
+//至於 perm(~) 此 recursive function 則可在輸出時改寫如下：
+
+void perm(char *list, int k, int n)
+
+{   int i, tmp;
+
+	if (k == n-1)
+
+	{   String a = list;     // Convert char * list to String a
+
+	   a = a.SubString(1, n);   // The first n characters of a
+
+	   // a.SubString(1, n) ==> the n-char starting from a[1]
+
+	   Form1->Memo3->Lines->Add(a+"  ["+IntToStr(count++)+"]");
+
+	}
+	else
+
+	{   for (i=k; i<n; i++)
+
+	   {   SWAP(list[k], list[i], tmp);
+
+		  perm(list, k+1, n);
+
+		  SWAP(list[k], list[i], tmp);
+
+	   }
+
+	}
+
+}
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+
+	k = StrToInt(Edit1->Text);
+	n = StrToInt(Edit2->Text);
+	perm( list, k, n );
+}
+//---------------------------------------------------------------------------
+
+
+
+
+
